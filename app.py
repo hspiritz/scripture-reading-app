@@ -141,7 +141,7 @@ def fetch_sheet_records():
     try:
         # If running on Streamlit Cloud, use the Secrets text box
         if "creds" in st.secrets:
-            creds = json.loads(st.secrets["creds"])
+            creds = st.secrets["creds"])
         # If running locally on your computer, use your local JSON file
         else:
             with open(CREDENTIALS_FILE, "r") as f:
