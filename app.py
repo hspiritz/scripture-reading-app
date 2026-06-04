@@ -138,8 +138,13 @@ CREDENTIALS_FILE = "sheets-ai-automation-3a77cb6b83b6.json"
 @st.cache_data(ttl=0)
 def fetch_sheet_records():
     try:
-        with open(CREDENTIALS_FILE, "r") as f:
-            creds = json.load(f)
+        # If running on Streamlit Cloud, use the Secrets text box
+        if "creds" in st.secrets:
+            creds = json.loads(st.secrets["creds"])
+        # If running locally on your computer, use your local JSON file
+        else:
+            with open(CREDENTIALS_FILE, "r") as f:
+                creds = json.load(f)
         
         gc = gspread.service_account_from_dict(creds)
         sh = gc.open_by_url(GOOGLE_SHEET_URL)
